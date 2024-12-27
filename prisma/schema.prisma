@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["global", "project"]
+}
+
+model Event {
+    id        Int      @id @default(autoincrement())
+    title     String
+    subtitle  String?
+    address   String?
+    link      String?
+    debutAt   DateTime
+    finAt     DateTime
+    fullDay   Boolean  @default(false)
+    userId    String
+    typeEvent String?  @default("1 fois")
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@schema("project")
+}
+
+model UserParrams {
+    id     Int    @id @default(autoincrement())
+    userId String @unique
+    role   String @default("1")
+    color  String @default("#ffffff")
+
+    @@schema("project")
+}
+
+model Grade {
+    id        Int     @id @default(autoincrement())
+    name      String
+    listDroit String?
+    societeId String
+
+    @@schema("project")
+}
+
+model Droit {
+    id     Int     @id @default(autoincrement())
+    name   String
+    parent String?
+
+    @@schema("project")
+}
+
+model Societe {
+    id           Int      @id @default(autoincrement())
+    name         String   @unique
+    listChildren String?
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+
+    @@schema("project")
+}
+
+model User {
+    id             Int       @id @default(autoincrement())
+    userId         String
+    username       String?   @unique
+    nom            String?
+    prenom         String?
+    email          String?   @unique
+    verifiedEmail  Boolean   @default(false)
+    token          String?
+    dateValidToken DateTime?
+    password       String?
+    tempPassword   String
+    exterieur      Boolean   @default(false)
+    createdAt      DateTime  @default(now())
+    updatedAt      DateTime  @updatedAt
+
+    @@schema("global")
+}
