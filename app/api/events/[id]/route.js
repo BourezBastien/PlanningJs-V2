@@ -28,7 +28,7 @@ function calculateTimeDifference(startDate, endDate) {
   return endDate.getTime() - startDate.getTime();
 }
 
-import { prisma } from '@/lib/prisma';
+import prisma from '@/lib/prisma';
 
 export async function PUT(request, { params }) {
   const eventId = parseInt(params.id);

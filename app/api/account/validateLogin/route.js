@@ -3,7 +3,7 @@ import { parse } from 'cookie';
 import jwt from 'jsonwebtoken';
 import { NextResponse } from 'next/server';
 
-import { prisma } from '@/lib/prisma';
+import prisma from '@/lib/prisma';
 
 export async function PUT(req) {
   // Parse les cookies pour extraire le token

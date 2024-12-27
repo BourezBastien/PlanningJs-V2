@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
 
-import { prisma } from '@/lib/prisma';
+import prisma from '@/lib/prisma';
 
 const generateRandomPassword = (longueur = 8) => {
   const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

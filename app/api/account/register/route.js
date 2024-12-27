@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
 
-import { prisma } from '@/lib/prisma';
+import prisma from '@/lib/prisma';
 
 export async function POST(request) {
     const genererChaineAleatoire = (longueur) => {
@@ -20,7 +20,7 @@ export async function POST(request) {
     
     try {
         const body = await request.json();
-        const { username, email, color, password } = body;
+        const { username, email, password } = body;
 
         const tempPassword = password || genererChaineAleatoire(8);
         const userId = genererNombreAleatoire(10);
