@@ -8,7 +8,8 @@
     "lint": "next lint",
     "prisma:sync": "prisma db push --schema=./prisma/project.prisma && prisma db push --schema=./prisma/global.prisma",
     "prisma:generate": "prisma generate --schema=prisma/project.prisma && prisma generate --schema=prisma/global.prisma",
-    "build": "npm run prisma:generate && next build"
+    "build": "next build",
+    "postinstall": "npm run prisma:generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
