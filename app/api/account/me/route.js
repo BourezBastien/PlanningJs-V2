@@ -1,6 +1,5 @@
-import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
-import { globalPrisma, projectPrisma } from '@/lib/prisma';
+import { NextResponse } from 'next/server';
 
 export async function GET(req) {
   const token = req.cookies.get('authToken');
@@ -12,7 +11,7 @@ export async function GET(req) {
   try {
     const decoded = jwt.verify(token.value, process.env.JWT_SECRET);
 
-    const user = await globalPrisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: { id: decoded.userId },
       select: {
         id: true,
@@ -26,11 +25,11 @@ export async function GET(req) {
       return NextResponse.json({ error: 'Utilisateur introuvable ou rôle manquant' }, { status: 404 });
     }
     try {
-      let parrams = await projectPrisma.userParrams.findUnique({
+      let parrams = await prisma.userParrams.findUnique({
         where: {userId: user.userId}
       })
       if(!parrams) {
-        parrams = await projectPrisma.userParrams.create({
+        parrams = await prisma.userParrams.create({
           data: {
               userId: user.userId
           },
@@ -46,7 +45,7 @@ export async function GET(req) {
       
     }
 
-    const grades = await projectPrisma.grade.findMany({
+    const grades = await prisma.grade.findMany({
       where: { id: { in: roleIds } },
       select: { listDroit: true },
     });

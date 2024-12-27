@@ -1,5 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { globalPrisma, projectPrisma } from '@/lib/prisma';
+import { NextResponse } from 'next/server';
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
@@ -9,7 +8,7 @@ export async function GET(request) {
     let users;
 
     if (username && username.trim() !== '') {
-      users = await globalPrisma.user.findMany({
+      users = await prisma.user.findMany({
         where: {
           username: {
             contains: username,
@@ -17,12 +16,12 @@ export async function GET(request) {
         },
       });
     } else {
-      users = await globalPrisma.user.findMany();
+      users = await prisma.user.findMany();
     }
 
     const filteredResponse = await Promise.all(
       users.map(async (user) => {
-        const parrams = await projectPrisma.userParrams.findUnique({
+        const parrams = await prisma.userParrams.findUnique({
           where: { userId: user.userId },
         });
         if (!parrams) {

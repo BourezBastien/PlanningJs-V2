@@ -1,8 +1,7 @@
-import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
 import { NextResponse } from 'next/server';
 
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 export async function PUT(request) {
     const token = request.cookies.get('authToken');

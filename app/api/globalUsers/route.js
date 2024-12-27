@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server';
 
-import { globalPrisma, projectPrisma } from '@/lib/prisma';
 
 export async function GET(req) {
   try {
     
-    let response = await globalPrisma.user.findMany({
+    let response = await prisma.user.findMany({
         select: {
           id: true,
           username: true,
@@ -15,7 +14,7 @@ export async function GET(req) {
 
     const filteredResponse = await Promise.all(
       response.map(async (user) => {
-        const parrams = await projectPrisma.userParrams.findUnique({
+        const parrams = await prisma.userParrams.findUnique({
           where: { userId: user.userId },
         });
         if (!parrams) {

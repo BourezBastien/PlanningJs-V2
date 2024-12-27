@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
+import { NextResponse } from 'next/server';
 
-import { globalPrisma, projectPrisma } from '@/lib/prisma';
+import { prisma } from '@/lib/prisma';
 
 const generateRandomPassword = (longueur = 8) => {
   const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -19,7 +19,7 @@ export async function GET(req) {
     let response;
 
     if (userId) {
-      response = await globalPrisma.user.findUnique({
+      response = await prisma.user.findUnique({
         where: { id: parseInt(userId, 10) },
         select: {
           id: true,
@@ -28,7 +28,7 @@ export async function GET(req) {
         },
       });
 
-      let parrams = await projectPrisma.userParrams.findUnique({
+      let parrams = await prisma.userParrams.findUnique({
         where: {userId: response.userId}
       })
   
@@ -42,7 +42,7 @@ export async function GET(req) {
         return NextResponse.json({ error: 'Utilisateur introuvable' }, { status: 404 });
       }
     } else {
-      response = await globalPrisma.user.findMany({
+      response = await prisma.user.findMany({
         select: {
           id: true,
           username: true,
@@ -51,7 +51,7 @@ export async function GET(req) {
       });
         const filteredResponse = await Promise.all(
         response.map(async (user) => {
-          const parrams = await projectPrisma.userParrams.findUnique({
+          const parrams = await prisma.userParrams.findUnique({
             where: { userId: user.userId },
           });
           if (!parrams) {

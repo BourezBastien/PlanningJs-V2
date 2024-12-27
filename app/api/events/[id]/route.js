@@ -1,4 +1,3 @@
-import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
 
 function differenceInCalendarDays(date1, date2) {
@@ -29,7 +28,7 @@ function calculateTimeDifference(startDate, endDate) {
   return endDate.getTime() - startDate.getTime();
 }
 
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 export async function PUT(request, { params }) {
   const eventId = parseInt(params.id);

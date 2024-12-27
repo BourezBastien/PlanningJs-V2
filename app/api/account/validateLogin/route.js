@@ -1,10 +1,9 @@
-import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
+import { parse } from 'cookie';
 import jwt from 'jsonwebtoken';
 import { NextResponse } from 'next/server';
-import { parse } from 'cookie';
 
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 export async function PUT(req) {
   // Parse les cookies pour extraire le token

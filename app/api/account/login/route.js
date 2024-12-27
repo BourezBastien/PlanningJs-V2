@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { NextResponse } from 'next/server';
 
-import { globalPrisma, projectPrisma } from '@/lib/prisma';
+import { prisma } from '@/lib/prisma';
 
 export async function POST(req) {
   const { username, password } = await req.json();
@@ -12,7 +12,7 @@ export async function POST(req) {
   }
 
   try {
-    const user = await globalPrisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: { username },
     });
 
