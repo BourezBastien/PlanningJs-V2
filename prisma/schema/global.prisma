@@ -1,14 +1,3 @@
-datasource globalDB {
-    provider = "mysql" // ou "postgresql", "mongodb", etc.
-    url      = env("GLOBAL_DATABASE_URL")
-}
-
-generator globalClient {
-    provider      = "prisma-client-js"
-    output        = "./prisma-global"
-    binaryTargets = ["native", "debian-openssl-3.0.x"]
-    previewFeatures = ["prismaSchemaFolder"]
-}
 
 model User {
     id             Int       @id @default(autoincrement())
